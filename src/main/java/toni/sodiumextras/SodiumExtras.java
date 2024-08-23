@@ -1,4 +1,4 @@
-package toni.sodiumleafculling;
+package toni.sodiumextras;
 
 #if NEO
 import net.neoforged.fml.common.Mod;
@@ -12,7 +12,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 #if FORGELIKE
 @Mod("sodiumleafculling")
 #endif
-public class SodiumLeafCulling
+public class SodiumExtras
 {
 
 }
