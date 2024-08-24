@@ -133,6 +133,13 @@ dependencies {
 		settings.depsHandler.addFabric(this)
 		modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fapi")}")
 		modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
+
+		val fcapi = when (mcVersion) {
+			"1.19.2" -> modApi("net.minecraftforge:forgeconfigapiport-fabric:${property("deps.forgeconfigapi")}")
+			else -> modApi("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${property("deps.forgeconfigapi")}")
+		}
+
+		include(fcapi!!)
 	}
 
 	if (isForge) {
@@ -162,7 +169,6 @@ loom {
 		convertAccessWideners.set(true)
 		mixinConfigs("mixins.${mod.id}.json")
 	} else if (loader == "neoforge") neoForge {
-
 	}
 
 	runConfigs["client"].apply {
@@ -180,6 +186,15 @@ loom {
 }
 
 // Tasks
+
+tasks {
+	remapJar {
+		if (isNeo) {
+			atAccessWideners.add("${mod.id}.accesswidener")
+		}
+	}
+}
+
 tasks.withType<JavaCompile>() {
 	options.compilerArgs.add("-Xplugin:Manifold")
 	// modify the JavaCompile task and inject our auto-generated Manifold symbols

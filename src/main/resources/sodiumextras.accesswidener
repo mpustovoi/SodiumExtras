@@ -1,1 +1,7 @@
 accessWidener v2 named
+accessible field net/minecraft/client/Options fullscreen Lnet/minecraft/client/OptionInstance;
+accessible class net/minecraft/client/gui/Font$StringRenderOutput
+accessible field net/minecraft/client/renderer/FogRenderer$FogData start F
+accessible field net/minecraft/client/renderer/FogRenderer$FogData end F
+accessible field net/minecraft/client/renderer/FogRenderer$FogData shape Lcom/mojang/blaze3d/shaders/FogShape;
+accessible class net/minecraft/client/renderer/FogRenderer$FogData

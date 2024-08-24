@@ -4,15 +4,32 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "mixins": [
-    "AbstractBlockRenderContextAccessor",
-    "BlockOcclusionCacheMixin",
-    "BlockRendererMixin",
-    "PerformanceSettingsMixin",
-    "SodiumGameOptionPagesMixin"
+    "impl.embeddium.EmbPagesMixin",
+    "impl.entitydistance.EntityTypeMixin",
+    "impl.entitydistance.TileEntityTypeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "impl.borderless.BorderlessWindowMixin",
+    "impl.borderless.KeyboardF11Mixin",
+    "impl.borderless.accessors.MainWindowAccessor",
+    "impl.cloudheight.CloudHeightMixin",
+    "impl.darkness.DimensionEffectsMixin",
+    "impl.darkness.DimensionEffectsMixin$EndMixin",
+    "impl.darkness.DimensionEffectsMixin$NetherMixin",
+    "impl.darkness.GameRendererMixin",
+    "impl.darkness.LightMapTexManagerMixin",
+    "impl.darkness.NativeImageTextureMixin",
+    "impl.darkness.accessors.LightTextureAccessor",
+    "impl.embeddium.EmbOptionsMixin",
+    "impl.entitydistance.EntityDispatcherMixin",
+    "impl.entitydistance.TileDispatcherMixin",
+    "impl.fontshadow.FontMixin",
+    "impl.fontshadow.FontMixin$StringRenderOutputMixin",
+    "impl.fps.GpuUsageMixin",
+    "impl.language.LanguageMixin",
+    "impl.togglefog.FogMixin"
   ]
 }
