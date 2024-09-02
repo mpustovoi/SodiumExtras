@@ -13,7 +13,7 @@ public class FpsHistory {
         this.list.add(fps);
 
         if (this.list.size() > LIMIT) {
-            this.list.removeFirst();
+            this.list.remove(0);
         }
     }
 

@@ -10,13 +10,53 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
+
+#if FABRIC
+    #if AFTER_21_1
+    import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+    import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
+    import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+	import net.neoforged.fml.config.ModConfig;
+    import net.neoforged.neoforge.common.ModConfigSpec;
+    import net.neoforged.neoforge.common.ModConfigSpec.*;
+    #endif
+
+    #if CURRENT_20_1
+    import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
+    import net.minecraftforge.fml.config.ModConfig;
+    import net.minecraftforge.common.ForgeConfigSpec;
+    import net.minecraftforge.common.ForgeConfigSpec.*;
+    #endif
+#endif
+
+#if FORGE
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.common.ForgeConfig;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.*;
+import net.minecraftforge.fml.loading.FMLLoader;
+#endif
+
+#if NEO
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.*;
+#endif
 
 public class EmbyTools {
     private static final Marker IT = MarkerManager.getMarker("Tools");
@@ -88,7 +128,7 @@ public class EmbyTools {
                 : ChatFormatting.RESET).toString() + usage;
     }
 
-    public static boolean isWhitelisted(ResourceLocation entityOrTile, ModConfigSpec.ConfigValue<List<? extends String>> configValue) {
+    public static boolean isWhitelisted(ResourceLocation entityOrTile, #if AFTER_21_1 ModConfigSpec #else ForgeConfigSpec #endif.ConfigValue<List<? extends String>> configValue) {
         for (final String item: configValue.get()) {
             final var resLoc = resourceLocationPair(item);
             if (!resLoc.key().equals(entityOrTile.getNamespace())) continue;
@@ -128,9 +168,9 @@ public class EmbyTools {
     public static boolean isModInstalled(String modid) {
         #if FORGE
         return FMLLoader.getLoadingModList().getModFileById(modid) != null;
-        #endif
-
+        #else
         return false;
+        #endif
     }
 
     public static boolean isEntityWithinDistance(Player player, Entity entity, int maxHeight, int maxDistanceSquare) {

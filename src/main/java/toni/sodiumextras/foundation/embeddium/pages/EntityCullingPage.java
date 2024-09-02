@@ -1,6 +1,13 @@
 package toni.sodiumextras.foundation.embeddium.pages;
 
 import com.google.common.collect.ImmutableList;
+import toni.sodiumextras.EmbyConfig;
+import net.minecraft.network.chat.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+#if AFTER_21_1
 import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
 import net.caffeinemc.mods.sodium.client.gui.options.OptionImpact;
 import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
@@ -9,11 +16,16 @@ import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatt
 import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
 import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import net.caffeinemc.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
-import toni.sodiumextras.EmbyConfig;
-import net.minecraft.network.chat.Component;
-
-import java.util.ArrayList;
-import java.util.List;
+#else
+import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
+import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
+import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
+import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
+import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
+#endif
 
 public class EntityCullingPage extends OptionPage {
     private static final SodiumOptionsStorage performanceOptionsStorage = new SodiumOptionsStorage();

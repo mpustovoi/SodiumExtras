@@ -1,7 +1,16 @@
 package toni.sodiumextras.mixins.impl.embeddium;
 
-import net.caffeinemc.mods.sodium.client.gui.SodiumOptionsGUI;
-import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
+#if FORGE
+import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
+import org.embeddedt.embeddium.gui.EmbeddiumVideoOptionsScreen;
+#elif AFTER_21_1
+    import net.caffeinemc.mods.sodium.client.gui.SodiumOptionsGUI;
+    import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
+    #else
+    import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
+    import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
+#endif
+
 import net.minecraft.client.gui.screens.Screen;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +22,7 @@ import toni.sodiumextras.foundation.embeddium.pages.TrueDarknessPage;
 
 import java.util.List;
 
-@Mixin(value = SodiumOptionsGUI.class, remap = false, priority = 100/* Prevents other forks of sodium extra stay above emb++*/)
+@Mixin(value = #if FORGE EmbeddiumVideoOptionsScreen.class #else SodiumOptionsGUI.class #endif, remap = false, priority = 100/* Prevents other forks of sodium extra stay above emb++*/)
 public class EmbOptionsMixin {
     @Shadow @Final private List<OptionPage> pages;
 //
@@ -21,7 +30,7 @@ public class EmbOptionsMixin {
 //    private void redirect$qualityPage(Screen prevScreen, CallbackInfo ci) {
 //        pages.add(new QualityPlusPage());
 //    }
-
+    #if FORGE #else
     @Inject(method = "<init>", at = @At("RETURN"))
     private void inject$dynLightsPage(Screen prevScreen, CallbackInfo ci) {
         //pages.add(new QualityPlusPage());
@@ -29,4 +38,5 @@ public class EmbOptionsMixin {
         pages.add(new EntityCullingPage());
         pages.add(new OthersPage());
     }
+    #endif
 }

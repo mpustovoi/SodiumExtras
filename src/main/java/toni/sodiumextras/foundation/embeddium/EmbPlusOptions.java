@@ -1,12 +1,6 @@
 package toni.sodiumextras.foundation.embeddium;
 
-import net.caffeinemc.mods.sodium.client.gui.options.*;
-import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatter;
-import net.caffeinemc.mods.sodium.client.gui.options.control.CyclingControl;
-import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
-import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
-import net.caffeinemc.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
-import net.caffeinemc.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
+
 import toni.sodiumextras.EmbyConfig;
 import toni.sodiumextras.EmbyConfig.FPSDisplayGravity;
 import toni.sodiumextras.EmbyConfig.FPSDisplayMode;
@@ -15,6 +9,24 @@ import toni.sodiumextras.EmbyConfig.FullScreenMode;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
+
+#if AFTER_21_1
+import net.caffeinemc.mods.sodium.client.gui.options.*;
+import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import net.caffeinemc.mods.sodium.client.gui.options.control.CyclingControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
+import net.caffeinemc.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
+import net.caffeinemc.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
+#else
+import me.jellysquid.mods.sodium.client.gui.options.*;
+import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
+import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
+#endif
 
 public class EmbPlusOptions {
     public static Option<FullScreenMode> getFullscreenOption(MinecraftOptionsStorage options) {
@@ -132,7 +144,7 @@ public class EmbPlusOptions {
                 .setBinding((opts, value) -> EmbyConfig.chunkFadeSpeed.set(value),
                         (opts) -> EmbyConfig.chunkFadeSpeed.get())
                 .setImpact(OptionImpact.LOW)
-                .setEnabled(() -> false)
+                .setEnabled(#if AFTER_21_1 () -> false #else false #endif)
                 .build();
 
         groups.add(OptionGroup.createBuilder()

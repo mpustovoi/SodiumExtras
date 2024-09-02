@@ -1,6 +1,9 @@
 package toni.sodiumextras.foundation.embeddium.pages;
 
 import com.google.common.collect.ImmutableList;
+
+
+#if AFTER_21_1
 import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
 import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
 import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
@@ -9,6 +12,17 @@ import net.caffeinemc.mods.sodium.client.gui.options.control.CyclingControl;
 import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
 import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import net.caffeinemc.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
+#else
+import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
+import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
+import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
+import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
+#endif
+
 import toni.sodiumextras.EmbyConfig;
 import net.minecraft.network.chat.Component;
 
@@ -152,7 +166,7 @@ public class TrueDarknessPage extends OptionPage {
                             EmbyConfig.darknessBlockLightOnlyCache = value;
                         },
                         (options) -> EmbyConfig.darknessBlockLightOnlyCache)
-                .setEnabled(() -> false)
+                .setEnabled(#if AFTER_21_1 () -> false #else false #endif)
                 .build();
 
 

@@ -15,7 +15,8 @@ import static toni.sodiumextras.EmbyConfig.fullScreen;
 
 @Mixin(KeyboardHandler.class)
 public class KeyboardF11Mixin {
-    @Shadow @Final public Minecraft minecraft;
+    @Shadow @Final
+    private Minecraft minecraft;
 
     @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;toggleFullScreen()V"), cancellable = true)
     public void redirect$handleFullScreenToggle(long pWindowPointer, int pKey, int pScanCode, int pAction, int pModifiers, CallbackInfo ci) {

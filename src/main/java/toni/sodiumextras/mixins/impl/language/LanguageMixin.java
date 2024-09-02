@@ -2,8 +2,6 @@ package toni.sodiumextras.mixins.impl.language;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
-import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import toni.sodiumextras.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -11,8 +9,15 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-
 import java.util.concurrent.CompletableFuture;
+
+#if AFTER_21_1
+import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
+import net.minecraft.client.gui.screens.options.OptionsSubScreen;
+#else
+import net.minecraft.client.gui.screens.LanguageSelectScreen;
+import net.minecraft.client.gui.screens.OptionsSubScreen;
+#endif
 
 @Mixin(LanguageSelectScreen.class)
 public abstract class LanguageMixin extends OptionsSubScreen {

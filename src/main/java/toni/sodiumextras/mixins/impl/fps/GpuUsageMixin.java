@@ -1,7 +1,6 @@
 package toni.sodiumextras.mixins.impl.fps;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+
 import toni.sodiumextras.EmbyConfig;
 import toni.sodiumextras.foundation.fps.accessors.IUsageGPU;
 import net.minecraft.client.Minecraft;
@@ -14,10 +13,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 @Mixin(Minecraft.class)
 public abstract class GpuUsageMixin implements IUsageGPU {
-    @Shadow  public MultiPlayerGameMode gameMode;
+    @Shadow public MultiPlayerGameMode gameMode;
     @Shadow private double gpuUtilization;
     @Unique private double embPlus$gpuUsage = 0;
 

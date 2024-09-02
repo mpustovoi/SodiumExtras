@@ -7,11 +7,16 @@ val settings = object : TxniTemplateSettings {
 		}
 
 		override fun addFabric(deps: DependencyHandlerScope) {
-			deps.modImplementation(modrinth("sodium", "mc1.21-0.6.0-beta.1-fabric"))
+			if (mcVersion == "1.21.1")
+				deps.modImplementation(modrinth("sodium", "mc1.21-0.6.0-beta.1-fabric"))
+			else
+				deps.modImplementation(modrinth("sodium", "mc1.20.1-0.5.11"))
 		}
 
 		override fun addForge(deps: DependencyHandlerScope) {
-
+			deps.modImplementation(modrinth("embeddium", "0.3.31+mc1.20.1"))
+			deps.compileOnly(deps.annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.5")!!)
+			deps.include(deps.implementation("io.github.llamalad7:mixinextras-forge:0.3.5")!!)
 		}
 
 		override fun addNeo(deps: DependencyHandlerScope) {
@@ -31,7 +36,10 @@ val settings = object : TxniTemplateSettings {
 				deps.requires("fabric-api")
 			}
 
-			deps.requires("sodium")
+			if (isForge)
+				deps.requires("embeddium")
+			else
+				deps.requires("sodium")
 		}
 
 		override fun addCurseForge(deps: DependencyContainer) {
@@ -164,7 +172,6 @@ loom {
 		println("Could not set accesswidener!")
 	}
 
-
 	if (loader == "forge") forge {
 		convertAccessWideners.set(true)
 		mixinConfigs("mixins.${mod.id}.json")
@@ -173,7 +180,7 @@ loom {
 
 	runConfigs["client"].apply {
 		ideConfigGenerated(true)
-		vmArgs("-Dmixin.debug.export=true")
+		vmArgs("-Dmixin.debug.export=true", "-Dsodium.checks.issue2561=false")
 		programArgs("--username=nthxny") // Mom look I'm in the codebase!
 		runDir = "../../run/${stonecutter.current.project}/"
 	}

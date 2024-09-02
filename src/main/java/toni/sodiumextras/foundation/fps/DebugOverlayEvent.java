@@ -1,6 +1,6 @@
 package toni.sodiumextras.foundation.fps;
- 
-import net.minecraft.client.DeltaTracker;
+
+
 import toni.sodiumextras.EmbyConfig;
 import toni.sodiumextras.EmbyTools;
 import toni.sodiumextras.SodiumExtras;
@@ -10,17 +10,28 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+#if AFTER_21_1 import net.minecraft.client.DeltaTracker; #endif
 
 #if NEO
-
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.api.distmarker.Dist;
+#endif
 
+#if FORGE
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderGuiEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+#endif
+
+#if NEO
 @EventBusSubscriber(modid = SodiumExtras.ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+#elif FORGE
+@EventBusSubscriber(modid = SodiumExtras.ID, bus = EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 #endif
 public class DebugOverlayEvent {
     private static final FPSDisplay DISPLAY = new FPSDisplay();
@@ -40,7 +51,7 @@ public class DebugOverlayEvent {
     private static int gpuPercent = -1;
     private static int memUsage = -1;
 
-    #if NEO
+    #if FORGELIKE
     @SubscribeEvent
     public static void onRenderOverlay(RenderGuiEvent.Pre event) {
         var minecraft = Minecraft.getInstance();
@@ -52,7 +63,11 @@ public class DebugOverlayEvent {
     #endif
 
     public static void renderFPSChar(Minecraft mc, GuiGraphics graphics) {
+        #if AFTER_21_1
         if (mc.getDebugOverlay().showDebugScreen()) return; // No render when F3 is open
+        #else
+        if (mc.options.renderDebug || mc.options.renderFpsChart) return; // No render when F3 is open
+        #endif
 
         final var font = mc.font;
         final var scale = mc.options.guiScale().get();
@@ -119,7 +134,7 @@ public class DebugOverlayEvent {
     }
 
     private static ChatFormatting calculateMinFPS$getColor(Minecraft mc) {
-        var timer = mc.getDebugOverlay().getTickTimeLogger();
+        //var timer = mc.getDebugOverlay().getTickTimeLogger();
 
         var history = SodiumExtras.fpsHistory;
         var min = history.getMinimum();

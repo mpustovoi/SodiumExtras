@@ -3,9 +3,6 @@ package toni.sodiumextras;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.ModConfigSpec.*;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import toni.sodiumextras.mixins.impl.borderless.accessors.MainWindowAccessor;
@@ -15,20 +12,45 @@ import java.util.Collections;
 import java.util.List;
 
 #if FABRIC
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+    #if AFTER_21_1
+    import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+    import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
+    import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+	import net.neoforged.fml.config.ModConfig;
+    import net.neoforged.neoforge.common.ModConfigSpec;
+    import net.neoforged.neoforge.common.ModConfigSpec.*;
+    #endif
+
+    #if CURRENT_20_1
+    import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
+	import net.minecraftforge.fml.config.ModConfig;
+	import net.minecraftforge.common.ForgeConfigSpec;
+	import net.minecraftforge.common.ForgeConfigSpec.*;
+    #endif
+#endif
+
+#if FORGE
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.*;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 #endif
 
 #if NEO
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
-
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = SodiumExtras.ID)
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.*;
 #endif
+
+#if FORGELIKE @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = SodiumExtras.ID) #endif
 public class EmbyConfig {
     public static final Marker IT = MarkerManager.getMarker("Config");
 
-    public static final ModConfigSpec SPECS;
+    public static final #if AFTER_21_1 ModConfigSpec #else ForgeConfigSpec #endif SPECS;
 
     // GENERAL
     public static final EnumValue<FullScreenMode> fullScreen;
@@ -251,7 +273,7 @@ public class EmbyConfig {
 
         tileEntityWhitelist = BUILDER
                 .comment("List of all Block Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:chest\" - Ignores chests only", "Example 2: \"ae2:*\" - ignores all Block entities from Applied Energetics 2")
-                .defineListAllowEmpty(Collections.singletonList("whitelist"), Arrays.asList(DEFAULT_TILE_ENTITIES_WHITELIST), s -> s.toString().contains(":"));
+                .defineListAllowEmpty(Collections.singletonList("whitelist"), #if BEFORE_21_1 () -> #endif Arrays.asList(DEFAULT_TILE_ENTITIES_WHITELIST), s -> s.toString().contains(":"));
 
         // embeddiumextras -> performance -> distanceCulling ->
         BUILDER.pop();
@@ -271,7 +293,7 @@ public class EmbyConfig {
 
         entityWhitelist = BUILDER
                 .comment("List of all Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:bat\" - Ignores bats only", "Example 2: \"alexsmobs:*\" - ignores all entities for alexmobs mod")
-                .defineListAllowEmpty(Collections.singletonList("whitelist"), Arrays.asList(DEFAULT_ENTITIES_WHITELIST), (s) -> s.toString().contains(":"));
+                .defineListAllowEmpty(Collections.singletonList("whitelist"), #if BEFORE_21_1 () -> #endif Arrays.asList(DEFAULT_ENTITIES_WHITELIST), (s) -> s.toString().contains(":"));
 
         // embeddiumextras ->
         BUILDER.pop(3);
@@ -313,10 +335,10 @@ public class EmbyConfig {
         }
     }
 
-    #if NEO
+    #if FORGELIKE
     @SubscribeEvent
     #endif
-    public static void updateCache(#if NEO ModConfigEvent ignored #endif) {
+    public static void updateCache(#if FORGELIKE ModConfigEvent ignored #endif) {
         SodiumExtras.LOGGER.info(IT, "Updating config cache");
 
         fpsDisplayMarginCache = fpsDisplayMargin.get();
@@ -393,8 +415,8 @@ public class EmbyConfig {
         }
     }
     public enum DarknessMode {
-        TOTAL_DARKNESS(0.04f),
         PITCH_BLACK(0f),
+        TOTAL_DARKNESS(0.04f),
         DARK(0.08f),
         DIM(0.12f),
         OFF(-1);
