@@ -8,7 +8,7 @@ val settings = object : TxniTemplateSettings {
 
 		override fun addFabric(deps: DependencyHandlerScope) {
 			if (mcVersion == "1.21.1")
-				deps.modImplementation(modrinth("sodium", "mc1.21-0.6.0-beta.1-fabric"))
+				deps.modImplementation(modrinth("sodium", "mc1.21-0.6.0-beta.2-fabric"))
 			else
 				deps.modImplementation(modrinth("sodium", "mc1.20.1-0.5.11"))
 		}
@@ -20,7 +20,7 @@ val settings = object : TxniTemplateSettings {
 		}
 
 		override fun addNeo(deps: DependencyHandlerScope) {
-			deps.implementation(modrinth("sodium", "mc1.21-0.6.0-beta.1-neoforge"))
+			deps.implementation(modrinth("sodium", "mc1.21-0.6.0-beta.2-neoforge"))
 
 			deps.compileOnly("org.sinytra.forgified-fabric-api:fabric-api-base:0.4.42+d1308dedd1")
 			deps.compileOnly("org.sinytra.forgified-fabric-api:fabric-renderer-api-v1:3.4.0+acb05a39d1")
@@ -32,6 +32,8 @@ val settings = object : TxniTemplateSettings {
 	// For configuring the dependecies that will show up on your mod page.
 	override val publishHandler: PublishDependencyHandler get() = object : PublishDependencyHandler {
 		override fun addShared(deps: DependencyContainer) {
+			deps.requires("sodium-options-api")
+
 			if (isFabric) {
 				deps.requires("fabric-api")
 			}

@@ -44,6 +44,7 @@ public class EntityCullingPage extends OptionPage {
                 .setBinding(
                         (options, value) -> {
                             EmbyConfig.entityDistanceCulling.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.entityDistanceCullingCache = value;
                         },
                         (options) -> EmbyConfig.entityDistanceCullingCache)
@@ -58,6 +59,7 @@ public class EntityCullingPage extends OptionPage {
                         (options, value) -> {
                             int result = value * value;
                             EmbyConfig.entityCullingDistanceX.set(result);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.entityCullingDistanceXCache = result;
                         },
                         (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbyConfig.entityCullingDistanceXCache))))
@@ -71,6 +73,7 @@ public class EntityCullingPage extends OptionPage {
                 .setBinding(
                         (options, value) -> {
                             EmbyConfig.entityCullingDistanceY.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.entityCullingDistanceYCache = value;
                         },
                         (options) -> EmbyConfig.entityCullingDistanceYCache)
@@ -94,6 +97,7 @@ public class EntityCullingPage extends OptionPage {
                 .setBinding(
                         (options, value) -> {
                             EmbyConfig.tileEntityDistanceCulling.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.tileEntityDistanceCullingCache = value;
                         },
                         (options) -> EmbyConfig.tileEntityDistanceCullingCache)
@@ -108,6 +112,7 @@ public class EntityCullingPage extends OptionPage {
                 .setBinding((options, value) -> {
                             int result = value * value;
                             EmbyConfig.tileEntityCullingDistanceX.set(result);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.tileEntityCullingDistanceXCache = result;
                         },
                         (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbyConfig.tileEntityCullingDistanceXCache))))
@@ -120,6 +125,7 @@ public class EntityCullingPage extends OptionPage {
                 .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
                 .setBinding((options, value) -> {
                             EmbyConfig.tileEntityCullingDistanceY.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.tileEntityCullingDistanceYCache = value;
                         },
                         (options) -> EmbyConfig.tileEntityCullingDistanceYCache)

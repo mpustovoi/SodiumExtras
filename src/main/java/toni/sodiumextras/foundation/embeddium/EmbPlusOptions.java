@@ -54,7 +54,10 @@ public class EmbPlusOptions {
                         Component.translatable("sodium.extras.options.common.advanced")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbyConfig.fpsDisplayMode.set(value),
+                        (opts, value) -> {
+                            EmbyConfig.fpsDisplayMode.set(value);
+                            EmbyConfig.SPECS.save();
+                        },
                         (opts) -> EmbyConfig.fpsDisplayMode.get())
                 .setImpact(OptionImpact.LOW)
                 .build()
@@ -69,7 +72,10 @@ public class EmbPlusOptions {
                         Component.translatable("sodium.extras.options.displayfps.system.gpu"),
                         Component.translatable("sodium.extras.options.displayfps.system.ram")
                 }))
-                .setBinding((options, value) -> EmbyConfig.fpsDisplaySystemMode.set(value),
+                .setBinding((options, value) -> {
+                            EmbyConfig.fpsDisplaySystemMode.set(value);
+                            EmbyConfig.SPECS.save();
+                        },
                         (options) -> EmbyConfig.fpsDisplaySystemMode.get())
                 .build()
         );
@@ -84,7 +90,10 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("sodium.extras.options.displayfps.gravity.desc"))
                 .setControl((option) -> new CyclingControl<>(option, FPSDisplayGravity.class, components))
                 .setBinding(
-                        (opts, value) -> EmbyConfig.fpsDisplayGravity.set(value),
+                        (opts, value) -> {
+                            EmbyConfig.fpsDisplayGravity.set(value);
+                            EmbyConfig.SPECS.save();
+                        },
                         (opts) -> EmbyConfig.fpsDisplayGravity.get())
                 .build()
         );
@@ -98,6 +107,7 @@ public class EmbPlusOptions {
                 .setBinding(
                         (opts, value) -> {
                             EmbyConfig.fpsDisplayMargin.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.fpsDisplayMarginCache = value;
                         },
                         (opts) -> EmbyConfig.fpsDisplayMarginCache)
@@ -111,6 +121,7 @@ public class EmbPlusOptions {
                 .setBinding(
                         (options, value) -> {
                             EmbyConfig.fpsDisplayShadow.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.fpsDisplayShadowCache = value;
                         },
                         (options) -> EmbyConfig.fpsDisplayShadowCache)
@@ -127,6 +138,7 @@ public class EmbPlusOptions {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.fog.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.fogCache = value;
                         },
                         (options) -> EmbyConfig.fogCache)
@@ -141,7 +153,10 @@ public class EmbPlusOptions {
                         Component.translatable("options.graphics.fast"),
                         Component.translatable("options.graphics.fancy")
                 }))
-                .setBinding((opts, value) -> EmbyConfig.chunkFadeSpeed.set(value),
+                .setBinding((opts, value) -> {
+                            EmbyConfig.chunkFadeSpeed.set(value);
+                            EmbyConfig.SPECS.save();
+                        },
                         (opts) -> EmbyConfig.chunkFadeSpeed.get())
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(#if AFTER_21_1 () -> false #else false #endif)
@@ -159,6 +174,7 @@ public class EmbPlusOptions {
                 .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.biomeBlend()))
                 .setBinding((options, value) -> {
                             EmbyConfig.cloudsHeight.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.cloudsHeightCache = value;
                         },
                         (options) -> EmbyConfig.cloudsHeightCache)
@@ -179,6 +195,7 @@ public class EmbPlusOptions {
                 .setBinding(
                         (options, value) -> {
                             EmbyConfig.fontShadows.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.fontShadowsCache = value;
                         },
                         (options) -> EmbyConfig.fontShadowsCache)

@@ -1,2 +1,1 @@
-## Changelog
-- Port to 1.20.1
+fix config not saving when applied in game (#2)

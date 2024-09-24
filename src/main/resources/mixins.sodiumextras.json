@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "mixins": [
-    "impl.embeddium.EmbPagesMixin",
+    "impl.sodium.EmbPagesMixin",
     "impl.entitydistance.EntityTypeMixin",
     "impl.entitydistance.TileEntityTypeMixin"
   ],
@@ -23,7 +23,7 @@
     "impl.darkness.LightMapTexManagerMixin",
     "impl.darkness.NativeImageTextureMixin",
     "impl.darkness.accessors.LightTextureAccessor",
-    "impl.embeddium.EmbOptionsMixin",
+    "impl.sodium.EmbOptionsMixin",
     "impl.entitydistance.EntityDispatcherMixin",
     "impl.entitydistance.TileDispatcherMixin",
     "impl.fontshadow.FontMixin",

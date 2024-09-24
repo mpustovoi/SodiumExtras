@@ -333,6 +333,8 @@ public class EmbyConfig {
             ((MainWindowAccessor) (Object) window).setDirty(true);
             window.changeFullscreenVideoMode();
         }
+
+        EmbyConfig.SPECS.save();
     }
 
     #if FORGELIKE

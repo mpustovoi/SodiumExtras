@@ -48,7 +48,10 @@ public class OthersPage extends OptionPage {
                                 Component.translatable("sodium.extras.options.common.replace"),
                                 Component.translatable("sodium.extras.options.common.off")
                         }))
-                        .setBinding((options, value) -> EmbyConfig.borderlessAttachModeF11.set(value),
+                        .setBinding((options, value) -> {
+                                    EmbyConfig.borderlessAttachModeF11.set(value);
+                                    EmbyConfig.SPECS.save();
+                                },
                                 (options) -> EmbyConfig.borderlessAttachModeF11.get())
                         .build())
                 .add(OptionImpl.createBuilder(boolean.class, mixinsOptionsStorage)
@@ -57,6 +60,7 @@ public class OthersPage extends OptionPage {
                         .setControl(TickBoxControl::new)
                         .setBinding((options, value) -> {
                                     EmbyConfig.fastLanguageReload.set(value);
+                                    EmbyConfig.SPECS.save();
                                     EmbyConfig.fastLanguageReloadCache = value;
                                 },
                                 (options) -> EmbyConfig.fastLanguageReloadCache)

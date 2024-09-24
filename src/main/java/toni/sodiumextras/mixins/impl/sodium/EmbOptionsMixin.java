@@ -1,4 +1,4 @@
-package toni.sodiumextras.mixins.impl.embeddium;
+package toni.sodiumextras.mixins.impl.sodium;
 
 #if FORGE
 import me.jellysquid.mods.sodium.client.gui.options.OptionPage;

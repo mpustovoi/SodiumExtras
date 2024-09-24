@@ -50,7 +50,10 @@ public class TrueDarknessPage extends OptionPage {
                         Component.translatable("sodium.extras.options.darkness.mode.dim"),
                         Component.translatable("options.off")
                 }))
-                .setBinding((opts, value) -> EmbyConfig.darknessMode.set(value),
+                .setBinding((opts, value) -> {
+                            EmbyConfig.darknessMode.set(value);
+                            EmbyConfig.SPECS.save();
+                        },
                         (opts) -> EmbyConfig.darknessMode.get())
                 .build();
 
@@ -60,6 +63,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.darknessOnNoSkyLight.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessOnNoSkyLightCache = value;
                         },
                         (options) -> EmbyConfig.darknessOnNoSkyLightCache)
@@ -78,6 +82,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.darknessByDefault.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessByDefaultCache = value;
                         },
                         (options) -> EmbyConfig.darknessByDefaultCache)
@@ -88,6 +93,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.darknessOnOverworld.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessOnOverworldCache = value;
                         },
                         (options) -> EmbyConfig.darknessOnOverworldCache)
@@ -99,6 +105,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.darknessOnNether.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessOnNetherCache = value;
                         },
                         (options) -> EmbyConfig.darknessOnNetherCache)
@@ -111,6 +118,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setBinding((options, current) -> {
                             var value = current / 100d;
                             EmbyConfig.darknessNetherFogBright.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessNetherFogBrightCache = value;
                         },
                         (options) -> Math.toIntExact(Math.round(EmbyConfig.darknessNetherFogBrightCache * 100)))
@@ -122,6 +130,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.darknessOnEnd.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessOnEndCache = value;
                         },
                         (options) -> EmbyConfig.darknessOnEndCache)
@@ -134,6 +143,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setBinding((options, current) -> {
                             var value = current / 100d;
                             EmbyConfig.darknessEndFogBright.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessEndFogBrightCache = value;
                         },
                         (options) -> Math.toIntExact(Math.round(EmbyConfig.darknessEndFogBrightCache * 100)))
@@ -163,6 +173,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.darknessBlockLightOnly.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessBlockLightOnlyCache = value;
                         },
                         (options) -> EmbyConfig.darknessBlockLightOnlyCache)
@@ -176,6 +187,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.darknessAffectedByMoonPhase.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessAffectedByMoonPhaseCache = value;
                         },
                         (options) -> EmbyConfig.darknessAffectedByMoonPhaseCache)
@@ -188,6 +200,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setBinding((options, current) -> {
                             var value = current / 100d;
                             EmbyConfig.darknessNewMoonBright.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessNewMoonBrightCache = value;
                         },
                         (options) -> Math.toIntExact(Math.round(EmbyConfig.darknessNewMoonBrightCache * 100d)))
@@ -200,6 +213,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setBinding((options, current) -> {
                             var value = current / 100d;
                             EmbyConfig.darknessFullMoonBright.set(value);
+                            EmbyConfig.SPECS.save();
                             EmbyConfig.darknessFullMoonBrightCache = value;
                         },
                         (options) -> Math.toIntExact(Math.round(EmbyConfig.darknessFullMoonBrightCache * 100)))

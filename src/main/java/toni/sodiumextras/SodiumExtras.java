@@ -11,6 +11,7 @@ import toni.sodiumextras.foundation.fps.FpsHistory;
     import net.fabricmc.api.ClientModInitializer;
     import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
     import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+    import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
     #if AFTER_21_1
     import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
     import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
@@ -67,6 +68,9 @@ public class SodiumExtras #if FABRIC implements ClientModInitializer #endif {
         #if AFTER_21_1
         NeoForgeModConfigEvents.loading(SodiumExtras.ID).register((ModConfig config) -> {
             EmbyConfig.updateCache();
+        });
+        ClientLifecycleEvents.CLIENT_STOPPING.register((mc) -> {
+            EmbyConfig.SPECS.save();
         });
         NeoForgeConfigRegistry.INSTANCE.register(SodiumExtras.ID, ModConfig.Type.CLIENT, EmbyConfig.SPECS);
         #else

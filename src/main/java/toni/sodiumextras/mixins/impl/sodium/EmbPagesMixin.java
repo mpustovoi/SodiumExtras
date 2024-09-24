@@ -1,5 +1,6 @@
-package toni.sodiumextras.mixins.impl.embeddium;
+package toni.sodiumextras.mixins.impl.sodium;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import toni.sodiumextras.foundation.embeddium.EmbPlusOptions;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -48,8 +49,8 @@ public class EmbPagesMixin {
         EmbPlusOptions.setQualityPlusOptions(groups, sodiumOpts);
     }
 
-    @Inject(method = "general", at = @At(value = "NEW", target = "(Lnet/minecraft/network/chat/Component;Lcom/google/common/collect/ImmutableList;)Lnet/caffeinemc/mods/sodium/client/gui/options/OptionPage;"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void injectFPSOption(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
+    @Inject(method = "general", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;"))
+    private static void injectFPSOption(CallbackInfoReturnable<OptionPage> cir, @Local List<OptionGroup> groups) {
         EmbPlusOptions.setFPSOptions(groups, sodiumOpts);
     }
 
@@ -69,7 +70,7 @@ public class EmbPagesMixin {
         EmbPlusOptions.setFPSOptions(groups, sodiumOpts);
     }
 
-    @Inject(method = "performance", at = @At(value = "NEW", target = "(Lnet/minecraft/network/chat/Component;Lcom/google/common/collect/ImmutableList;)Lme/jellysquid/mods/sodium/client/gui/options/OptionPage;"), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "performance", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;"), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void setPerformanceOptions(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
         EmbPlusOptions.setPerformanceOptions(groups, sodiumOpts);
     }
